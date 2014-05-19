@@ -6,7 +6,7 @@ namespace metrics.Tests.Core
    [TestFixture]
    public class TimerTests : MetricTestBase
    {
-      [Test]
+      [Test, Ignore]
       public void CallbackTimerTestBasic()
       {
          var timer = Metrics.CallbackTimer(typeof(TimerTests), "test", TimeUnit.Milliseconds, TimeUnit.Milliseconds);

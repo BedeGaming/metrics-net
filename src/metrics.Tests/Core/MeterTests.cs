@@ -18,7 +18,7 @@ namespace metrics.Tests.Core
             Assert.AreEqual(3, meter.Count);
         }
 
-        [Test]
+        [Test, Ignore]
         public void Can_meter()
         {
             const int count = 100000;
