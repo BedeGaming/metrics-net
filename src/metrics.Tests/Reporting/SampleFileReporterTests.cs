@@ -30,31 +30,6 @@ namespace metrics.Tests.Reporting
         }
 
         [Test]
-        public void File_is_created_with_json_content()
-        {
-            RegisterMetrics();
-
-            var directory = Path.GetTempPath();
-            var samples = Directory.GetFiles(directory, "*.sample");
-            foreach (var file in samples)
-            {
-                File.Delete(file);
-            }
-
-            string filename;
-            using (var reporter = new SampledFileReporter(directory, new JsonReportFormatter()))
-            {
-                reporter.Run();
-                samples = Directory.GetFiles(directory, "*.sample");
-                Assert.IsTrue(samples.Length == 1);
-                filename = samples[0];
-            }
-
-            var contents = File.ReadAllText(filename);
-            Console.WriteLine(contents);
-        }
-
-        [Test]
         public void Can_run_in_background()
         {
             const int ticks = 3;
