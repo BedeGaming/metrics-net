@@ -44,6 +44,18 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bede.Logging.Models">
+      <HintPath>..\..\packages\Bede.Logging.Models.3.0.1.156\lib\net45\Bede.Logging.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="Bede.Logging.Obfuscation">
+      <HintPath>..\..\packages\Bede.Logging.Providers.3.0.1.156\lib\net45\Bede.Logging.Obfuscation.dll</HintPath>
+    </Reference>
+    <Reference Include="Bede.Logging.Providers">
+      <HintPath>..\..\packages\Bede.Logging.Providers.3.0.1.156\lib\net45\Bede.Logging.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -67,6 +79,7 @@
     <Compile Include="Reporting\HumanReadableReportFormatter.cs" />
     <Compile Include="Reporting\IReportFormatter.cs" />
     <Compile Include="Reporting\JsonReportFormatter.cs" />
+    <Compile Include="Reporting\Log4NetReporter.cs" />
     <Compile Include="Reporting\ReporterBase.cs" />
     <Compile Include="Core\TimerMetric.cs" />
     <Compile Include="MachineMetrics.cs" />

@@ -11,9 +11,14 @@ namespace metrics.Reporting
     public abstract class ReporterBase : IReporter
     {
         protected TextWriter Out;
-        private readonly IReportFormatter _formatter;
+        protected readonly IReportFormatter Formatter;
         protected CancellationTokenSource Token;
-        internal int Runs { get; set; } 
+        internal int Runs { get; set; }
+
+        protected ReporterBase(IReportFormatter formatter)
+        {
+            Formatter = formatter;
+        }
 
         protected ReporterBase(TextWriter writer) : this(writer, new HumanReadableReportFormatter())
         {
@@ -23,7 +28,7 @@ namespace metrics.Reporting
         protected ReporterBase(TextWriter writer, IReportFormatter formatter)
         {
             Out = writer;
-            _formatter = formatter;
+            Formatter = formatter;
         }
 
         /// <summary>
@@ -79,7 +84,7 @@ namespace metrics.Reporting
         {
             try
             {
-                Out.Write(_formatter.GetSample());
+                Out.Write(Formatter.GetSample());
                 
                 Out.Flush();
 

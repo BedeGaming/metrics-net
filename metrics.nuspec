@@ -14,6 +14,9 @@
 		<tags>CLR metrics</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="6.0.2" />
+	  <dependency id="Bede.Logging.Models" version="3.0.1" />
+	  <dependency id="Bede.Logging.Providers" version="3.0.1" />
+	  <dependency id="log4net" version="2.0.3" />
     </dependencies>
 	</metadata>
 </package>
