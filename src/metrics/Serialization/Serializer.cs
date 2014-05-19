@@ -1,19 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ServiceStack.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using metrics.Core;
 
 namespace metrics.Serialization
 {
     public class Serializer
     {
-        static Serializer()
-        {
-            JsConfig.EmitLowercaseUnderscoreNames = true;
-            JsConfig.PropertyConvention = JsonPropertyConvention.Lenient;
-            JsConfig.ExcludeTypeInfo = true;
-        }
-
         public static string Serialize<T>(T entity)
         {
             if (entity is IDictionary<MetricName, IMetric>)
@@ -24,7 +18,7 @@ namespace metrics.Serialization
                 var serialized = Serialize(container);
                 return serialized;
             }
-            return JsonSerializer.SerializeToString(entity);
+            return JsonConvert.SerializeObject(entity, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
         }
     }
 
