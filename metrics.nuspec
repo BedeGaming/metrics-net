@@ -20,6 +20,6 @@
     </dependencies>
 	</metadata>
 	<files>
-	  <file src="src\metrics\bin\release\metrics.dll" target="lib\net45" />
+	  <file src="\bin\lib\net40\metrics.dll" target="lib\net45" />
 	</files>
 </package>
