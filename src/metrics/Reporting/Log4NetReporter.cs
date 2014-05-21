@@ -7,7 +7,7 @@ namespace metrics.Reporting
 {
     public class Log4NetReporter : ReporterBase
     {
-        private static readonly ILoggingService _loggingService = new Log4NetLoggingService(LogManager.GetLogger("Metrics"));
+        private static readonly ILoggingService _loggingService = new Log4NetLoggingService(LogManager.GetLogger("MetricsLogger"));
 
         public Log4NetReporter(IReportFormatter formatter) : base(formatter)
         {
