@@ -12,8 +12,8 @@ namespace metrics.Tests.Reporting
         [Test]
         public void Can_serialize_metrics_with_changes()
         {
-            var name = new MetricName(typeof(MeterTests), "Can_serialize_metrics_with_changes");
-            var meter = Metrics.Meter(typeof(MeterTests), "Can_serialize_metrics_with_changes", "test", TimeUnit.Seconds);
+            var name = new MetricName("MeterTests", "Can_serialize_metrics_with_changes");
+            var meter = Metrics.Meter("MeterTests", "Can_serialize_metrics_with_changes", "test", TimeUnit.Seconds);
             Assert.IsNotNull(Metrics.All[name], "Metric not found in central registry");
 
             meter.Mark(3);

@@ -18,31 +18,6 @@ namespace metrics
         private static readonly ConcurrentDictionary<MetricName, IMetric> _metrics = new ConcurrentDictionary<MetricName, IMetric>();
 
         /// <summary>
-        /// A convenience method for installing a gauge that is bound to a <see cref="PerformanceCounter" />
-        /// </summary>
-        /// <param name="category">The performance counter category</param>
-        /// <param name="counter">The performance counter name</param>
-        /// <param name="instance">The performance counter instance, if applicable</param>
-        /// <param name="label">A label to distinguish the metric in polling reports</param>
-        public static void InstallPerformanceCounterGauge(string category, string counter, string instance, string label)
-        {
-            var performanceCounter = new PerformanceCounter(category, counter, instance, true);
-            GetOrAdd(new MetricName(typeof(Metrics), Environment.MachineName + label), new GaugeMetric<double>(() => performanceCounter.NextValue()));
-        }
-
-        /// <summary>
-        /// A convenience method for installing a gauge that is bound to a <see cref="PerformanceCounter" />
-        /// </summary>
-        /// <param name="category">The performance counter category</param>
-        /// <param name="counter">The performance counter name</param>
-        /// <param name="label">A label to distinguish the metric in polling reports</param>
-        public static void InstallPerformanceCounterGauge(string category, string counter, string label)
-        {
-            var performanceCounter = new PerformanceCounter(category, counter, true);
-            GetOrAdd(new MetricName(typeof(Metrics), Environment.MachineName + label), new GaugeMetric<double>(() => performanceCounter.NextValue()));
-        }
-
-        /// <summary>
         /// Creates a new gauge metric and registers it under the given type and name
         /// </summary>
         /// <typeparam name="T">The type the gauge measures</typeparam>
@@ -50,9 +25,9 @@ namespace metrics
         /// <param name="name">The metric name</param>
         /// <param name="evaluator">The gauge evaluation function</param>
         /// <returns></returns>
-        public static GaugeMetric<T> Gauge<T>(Type owner, string name, Func<T> evaluator)
+        public static GaugeMetric<T> Gauge<T>(string resourceName, string name, Func<T> evaluator)
         {
-            return GetOrAdd(new MetricName(owner, name), new GaugeMetric<T>(evaluator));
+            return GetOrAdd(new MetricName(resourceName, name), new GaugeMetric<T>(evaluator));
         }
 
         /// <summary>
@@ -61,9 +36,9 @@ namespace metrics
         /// <param name="owner">The type that owns the metric</param>
         /// <param name="name">The metric name</param>
         /// <returns></returns>
-        public static CounterMetric Counter(Type owner, string name)
+        public static CounterMetric Counter(string resourceName, string name)
         {
-            return GetOrAdd(new MetricName(owner, name), new CounterMetric());
+            return GetOrAdd(new MetricName(resourceName, name), new CounterMetric());
         }
 
         /// <summary>
@@ -73,9 +48,9 @@ namespace metrics
         /// <param name="name">The metric name</param>
         /// <param name="biased">Whether the sample type is biased or uniform</param>
         /// <returns></returns>
-        public static HistogramMetric Histogram(Type owner, string name, bool biased)
+        public static HistogramMetric Histogram(string resourceName, string name, bool biased)
         {
-            return GetOrAdd(new MetricName(owner, name),
+            return GetOrAdd(new MetricName(resourceName, name),
                             new HistogramMetric(biased
                                                     ? HistogramMetric.SampleType.Biased
                                                     : HistogramMetric.SampleType.Uniform));
@@ -87,9 +62,9 @@ namespace metrics
         /// <param name="owner">The type that owns the metric</param>
         /// <param name="name">The metric name</param>
         /// <returns></returns>
-        public static HistogramMetric Histogram(Type owner, string name)
+        public static HistogramMetric Histogram(string resourceName, string name)
         {
-            return GetOrAdd(new MetricName(owner, name), new HistogramMetric(HistogramMetric.SampleType.Uniform));
+            return GetOrAdd(new MetricName(resourceName, name), new HistogramMetric(HistogramMetric.SampleType.Uniform));
         }
 
         /// <summary>
@@ -100,9 +75,9 @@ namespace metrics
         /// <param name="eventType">The plural name of the type of events the meter is measuring (e.g., <code>"requests"</code>)</param>
         /// <param name="unit">The rate unit of the new meter</param>
         /// <returns></returns>
-        public static MeterMetric Meter(Type owner, string name, string eventType, TimeUnit unit)
+        public static MeterMetric Meter(string resourceName, string name, string eventType, TimeUnit unit)
         {
-            var metricName = new MetricName(owner, name);
+            var metricName = new MetricName(resourceName, name);
             IMetric existingMetric;
             if (_metrics.TryGetValue(metricName, out existingMetric))
             {
@@ -122,9 +97,9 @@ namespace metrics
         /// <param name="durationUnit">The duration scale unit of the new timer</param>
         /// <param name="rateUnit">The rate unit of the new timer</param>
         /// <returns></returns>
-        public static TimerMetric Timer(Type owner, String name, TimeUnit durationUnit, TimeUnit rateUnit)
+        public static TimerMetric Timer(string resourceName, String name, TimeUnit durationUnit, TimeUnit rateUnit)
         {
-           var metricName = new MetricName(owner, name);
+           var metricName = new MetricName(resourceName, name);
            IMetric existingMetric;
            if (_metrics.TryGetValue(metricName, out existingMetric))
            {
@@ -145,9 +120,9 @@ namespace metrics
         /// <param name="durationUnit">The duration scale unit of the new timer</param>
         /// <param name="rateUnit">The rate unit of the new timer</param>
         /// <returns></returns>
-        public static CallbackTimerMetric CallbackTimer(Type owner, String name, TimeUnit durationUnit, TimeUnit rateUnit)
+        public static CallbackTimerMetric CallbackTimer(string resourceName, String name, TimeUnit durationUnit, TimeUnit rateUnit)
         {
-           var metricName = new MetricName(owner, name);
+           var metricName = new MetricName(resourceName, name);
            IMetric existingMetric;
            if (_metrics.TryGetValue(metricName, out existingMetric))
            {
@@ -169,9 +144,9 @@ namespace metrics
        /// <param name="durationUnit">The duration scale unit of the new timer</param>
        /// <param name="rateUnit">The rate unit of the new timer</param>
        /// <returns></returns>
-       public static ManualTimerMetric ManualTimer(Type owner, String name, TimeUnit durationUnit, TimeUnit rateUnit)
+        public static ManualTimerMetric ManualTimer(string resourceName, String name, TimeUnit durationUnit, TimeUnit rateUnit)
        {
-          var metricName = new MetricName(owner, name);
+          var metricName = new MetricName(resourceName, name);
           IMetric existingMetric;
           if (_metrics.TryGetValue(metricName, out existingMetric))
           {

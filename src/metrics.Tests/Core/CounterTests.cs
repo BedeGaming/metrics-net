@@ -8,7 +8,7 @@ namespace metrics.Tests.Core
         [Test]
         public void Can_count()
         {
-            var counter = Metrics.Counter(typeof (CounterTests), "Can_count");
+            var counter = Metrics.Counter("CounterTests", "Can_count");
             Assert.IsNotNull(counter);
             
             counter.Increment(100);

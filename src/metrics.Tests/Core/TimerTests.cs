@@ -9,7 +9,7 @@ namespace metrics.Tests.Core
       [Test, Ignore]
       public void CallbackTimerTestBasic()
       {
-         var timer = Metrics.CallbackTimer(typeof(TimerTests), "test", TimeUnit.Milliseconds, TimeUnit.Milliseconds);
+         var timer = Metrics.CallbackTimer("TimerTests", "test", TimeUnit.Milliseconds, TimeUnit.Milliseconds);
 
          for (int i = 0; i < 10; i++)
          {
@@ -25,7 +25,7 @@ namespace metrics.Tests.Core
       [Test]
       public void ManualTimerTestBasic()
       {
-         var timer = Metrics.ManualTimer(typeof(TimerTests), "test", TimeUnit.Milliseconds, TimeUnit.Milliseconds);
+         var timer = Metrics.ManualTimer("TimerTests", "test", TimeUnit.Milliseconds, TimeUnit.Milliseconds);
 
          for (int i = 0; i < 10; i++)
          {

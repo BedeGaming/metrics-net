@@ -3,23 +3,23 @@
 namespace metrics.Core
 {
     /// <summary>
-    /// A hash key for storing metrics associated by the parent class and name pair
+    /// A hash key for storing metrics associated by the resource name and metric name pair
     /// </summary>
     public struct MetricName : IComparable<MetricName>
     {
-        public Type Class { get; private set; }
+        public string ResourceName { get; private set; }
 
         public string Name { get; private set; }
 
-        public MetricName(Type @class, string name) : this()
+        public MetricName(string resourceName, string name) : this()
         {
-            Class = @class;
+            ResourceName = resourceName;
             Name = name;
         }
 
         public bool Equals(MetricName other)
         {
-            return Equals(other.Name, Name) && Equals(other.Class, Class);
+            return Equals(other.Name, Name) && Equals(other.ResourceName, ResourceName);
         }
 
         public override bool Equals(object obj)
@@ -32,7 +32,7 @@ namespace metrics.Core
         {
             unchecked
             {
-                return ((Name != null ? Name.GetHashCode() : 0)*397) ^ (Class != null ? Class.GetHashCode() : 0);
+                return ((Name != null ? Name.GetHashCode() : 0)*397) ^ (ResourceName != null ? ResourceName.GetHashCode() : 0);
             }
         }
 
@@ -48,12 +48,12 @@ namespace metrics.Core
 
         public int CompareTo(MetricName other)
         {
-            return string.Concat(Class, ".", Name).CompareTo(string.Concat(other.Class, ".", other.Name));
+            return string.Concat(ResourceName, ".", Name).CompareTo(string.Concat(other.ResourceName, ".", other.Name));
         }
 
         public override string ToString()
         {
-            return string.Concat(Class.Name, ".", Name);
+            return string.Concat(ResourceName, ".", Name);
         }
     }
 }

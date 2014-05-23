@@ -82,7 +82,6 @@
     <Compile Include="Reporting\Log4NetReporter.cs" />
     <Compile Include="Reporting\ReporterBase.cs" />
     <Compile Include="Core\TimerMetric.cs" />
-    <Compile Include="MachineMetrics.cs" />
     <Compile Include="Reporting\ConsoleReporter.cs" />
     <Compile Include="Reporting\IReporter.cs" />
     <Compile Include="Reporting\FileReporter.cs" />

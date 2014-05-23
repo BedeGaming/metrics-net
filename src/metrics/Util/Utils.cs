@@ -11,7 +11,7 @@ namespace metrics.Util
 
             foreach(var entry in metrics)
             {
-                var className = entry.Key.Class.Name;
+                var className = entry.Key.ResourceName;
                 IDictionary<string, IMetric> submetrics;
                 if(!sortedMetrics.ContainsKey(className))
                 {

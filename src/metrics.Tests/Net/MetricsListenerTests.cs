@@ -54,7 +54,7 @@ namespace metrics.Tests.Net
         {
             Metrics.Clear();
 
-            var counter = Metrics.Counter(typeof(MetricsListenerTests), "counter");
+            var counter = Metrics.Counter("MetricsListenerTests", "counter");
             counter.Increment();
 
             var content = GetResponseForRequest("http://localhost:" + Port + "/metrics");
